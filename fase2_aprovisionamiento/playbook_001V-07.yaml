@@ -1,0 +1,85 @@
+---
+# fase2_aprovisionamiento/playbook_001V-07.yaml
+# EP3 - DRY7122 | Aprovisionamiento corporativo con Ansible
+# Alumno: Gonzalez Hernandez Rodrigo | Codigo: 001V-07
+# IMPORTANTE: Todos los valores se cargan desde vars/vars_001V-07.yaml
+
+- name: "EP3 - Aprovisionamiento Router Planta Industrial Ltda"
+  hosts: routers
+  gather_facts: false
+
+  vars_files:
+    - ../vars/vars_001V-07.yaml
+
+  tasks:
+
+    # ── TAREA 1: Respaldo configuración actual ─────────────────────────────
+    - name: "T1 | Respaldar configuracion actual (show running-config)"
+      ios_command:
+        commands:
+          - show running-config
+      register: backup_output
+
+    - name: "T1 | Guardar respaldo en archivo"
+      copy:
+        content: "{{ backup_output.stdout[0] }}"
+        dest: "respaldo/backup_001V-07.cfg"
+      delegate_to: localhost
+
+    # ── TAREA 2: Habilitar NETCONF ─────────────────────────────────────────
+    - name: "T2 | Habilitar NETCONF (netconf-yang)"
+      ios_config:
+        lines:
+          - netconf-yang
+      notify: wait_netconf
+
+    # ── TAREA 3: Habilitar RESTCONF ────────────────────────────────────────
+    - name: "T3 | Habilitar RESTCONF"
+      ios_config:
+        lines:
+          - restconf
+
+    # ── TAREA 4: Habilitar HTTP seguro ────────────────────────────────────
+    - name: "T4 | Habilitar servidor HTTP seguro"
+      ios_config:
+        lines:
+          - ip http secure-server
+
+    # ── TAREA 5: Configurar hostname corporativo ──────────────────────────
+    - name: "T5 | Configurar hostname corporativo"
+      ios_config:
+        lines:
+          - "hostname {{ cliente.hostname }}"
+
+    # ── TAREA 6: Configurar banner de acceso ─────────────────────────────
+    - name: "T6 | Configurar banner de acceso"
+      ios_config:
+        lines:
+          - "banner motd # {{ router.banner }} #"
+
+    # ── TAREA 7: Configurar servidor NTP ─────────────────────────────────
+    - name: "T7 | Configurar servidor NTP"
+      ios_config:
+        lines:
+          - "ntp server {{ router.ntp_server }}"
+
+    # ── TAREA 8: Configurar descripción interfaz GigabitEthernet1 ─────────
+    - name: "T8 | Configurar descripcion interfaz GigabitEthernet1"
+      ios_config:
+        parents: "interface GigabitEthernet1"
+        lines:
+          - "description {{ router.descripcion_wan }}"
+
+    # ── TAREA 9: Crear interfaz Loopback con IP de gestión ────────────────
+    - name: "T9 | Crear interfaz Loopback{{ router.loopback_id }} con IP de gestion"
+      ios_config:
+        parents: "interface Loopback{{ router.loopback_id }}"
+        lines:
+          - "description Loopback-Gestion-{{ cliente.empresa }}"
+          - "ip address {{ router.loopback_ip }} {{ router.loopback_mask }}"
+          - "no shutdown"
+
+  handlers:
+    - name: wait_netconf
+      pause:
+        seconds: 10
