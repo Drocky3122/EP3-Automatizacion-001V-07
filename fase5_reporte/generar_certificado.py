@@ -10,7 +10,6 @@ import datetime
 import socket
 import yaml
 
-# ── Cargar variables ──────────────────────────────────────────────────────
 VARS_PATH = os.path.join(os.path.dirname(__file__), "../vars/vars_001V-07.yaml")
 with open(VARS_PATH, "r") as f:
     v = yaml.safe_load(f)
@@ -22,50 +21,43 @@ router  = v["router"]
 EVIDENCIAS  = os.path.join(os.path.dirname(__file__), "evidencias")
 FASE3_OUT   = os.path.join(os.path.dirname(__file__), "../fase3_validacion_netconf/evidencias/output_validacion_netconf.txt")
 FASE4_OUT   = os.path.join(os.path.dirname(__file__), "../fase4_validacion_restconf/evidencias/output_validacion_restconf.txt")
-DIFF_DIR    = os.path.join(EVIDENCIAS, f"diff_{alumno['codigo']}")
+DIFF_FILE   = os.path.join(EVIDENCIAS, f"diff_{alumno['codigo']}/diff_baseline_final.txt")
 CERT_PATH   = os.path.join(EVIDENCIAS, f"certificado_compliance_{alumno['codigo']}.txt")
 
 def leer_resultado(ruta, total_esperado):
-    """Lee el output de una fase y determina si es CONFORME."""
     try:
         with open(ruta, "r") as f:
             contenido = f.read()
         ok_count = contenido.count("[OK]")
-        if ok_count >= total_esperado and "CONFORME" in contenido and "NO CONFORME" not in contenido.split("RESULTADO")[1]:
+        if ok_count >= total_esperado and "RESULTADO GLOBAL: CONFORME" in contenido:
             return "CONFORME", ok_count, total_esperado
         else:
             return "NO CONFORME", ok_count, total_esperado
     except FileNotFoundError:
         return "NO EJECUTADO", 0, total_esperado
 
-def contar_diff():
-    """Verifica si el diff contiene cambios."""
-    if not os.path.isdir(DIFF_DIR):
-        return False, "Directorio diff no encontrado"
-    archivos = [f for f in os.listdir(DIFF_DIR) if os.path.isfile(os.path.join(DIFF_DIR, f))]
-    if not archivos:
-        return False, "Directorio diff vacío"
-    # Revisar si hay contenido en los archivos
-    for archivo in archivos:
-        ruta = os.path.join(DIFF_DIR, archivo)
-        if os.path.getsize(ruta) > 0:
-            return True, f"{len(archivos)} archivo(s) con diferencias detectadas"
-    return False, "Archivos diff vacíos (sin cambios detectados)"
+def verificar_diff():
+    try:
+        size = os.path.getsize(DIFF_FILE)
+        if size > 0:
+            with open(DIFF_FILE, "r") as f:
+                lineas = f.readlines()
+            return True, f"{len(lineas)} lineas de diferencias detectadas"
+        else:
+            return False, "Archivo diff vacio"
+    except FileNotFoundError:
+        return False, "Archivo diff no encontrado"
 
-# ── Evaluar fases ─────────────────────────────────────────────────────────
 resultado_netconf,  ok_netconf,  total_netconf  = leer_resultado(FASE3_OUT, 5)
 resultado_restconf, ok_restconf, total_restconf = leer_resultado(FASE4_OUT, 4)
-diff_ok, diff_msg = contar_diff()
-
+diff_ok, diff_msg = verificar_diff()
 resultado_diff = "CONFORME" if diff_ok else "NO CONFORME"
 
-# Resultado global
 if resultado_netconf == "CONFORME" and resultado_restconf == "CONFORME" and diff_ok:
     resultado_global = "CONFORME"
 else:
     resultado_global = "NO CONFORME"
 
-# ── Generar certificado ───────────────────────────────────────────────────
 now = datetime.datetime.now()
 linea = "=" * 64
 

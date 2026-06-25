@@ -1,7 +1,3 @@
-# fase1_baseline/testbed_001V-07.yaml
-# Testbed pyATS/Genie para EP3 - DRY7122
-# Alumno: Gonzalez Hernandez Rodrigo | Codigo: 001V-07
-
 devices:
   CSR1kv:
     os: iosxe
@@ -12,6 +8,14 @@ devices:
         password: cisco123!
     connections:
       cli:
-        protocol: ssh -o KexAlgorithms=diffie-hellman-group14-sha1
+        class: unicon.Unicon
+        protocol: ssh
         ip: 192.168.56.101
         port: 22
+        settings:
+          ESCAPE_CHAR_CALLBACK: null
+          BANNER_TIMEOUT: 30
+          LOGIN_TIMEOUT: 30
+          EXEC_TIMEOUT: 60
+          PROMPT: '%N[#>]'
+        login_creds: default

@@ -1,0 +1,59 @@
+
+================================================================
+       CERTIFICADO DE COMPLIANCE - EP3 DRY7122
+       Programacion y Redes Virtualizadas (SDN-NFV)
+       DUOC UC - Escuela de Informatica y Telecomunicaciones
+================================================================
+
+DATOS DEL ALUMNO
+  Codigo   : 001V-07
+  Nombre   : Gonzalez Hernandez Rodrigo
+  Seccion  : 001V
+
+DATOS DEL PROYECTO
+  Empresa cliente  : Planta Industrial Ltda
+  Hostname router  : RTR-PLANTIND
+  IP Router        : 192.168.56.101
+  IP Loopback      : 10.1.7.1/24
+  Descripcion WAN  : Enlace-WAN-Iquique
+  Servidor NTP     : 9.9.9.9
+
+FECHA DE EMISION
+  2026-06-25 18:54:04
+  Host VM : labvm
+
+================================================================
+RESULTADOS DE VALIDACION
+================================================================
+
+  [NETCONF]   Criterios conformes : 5/5
+              Resultado           : CONFORME
+
+  [RESTCONF]  Criterios conformes : 4/4
+              Resultado           : CONFORME
+
+  [DIFF]      Cambios detectados  : 261 lineas de diferencias detectadas
+              Resultado           : CONFORME
+
+================================================================
+  RESULTADO GLOBAL DE COMPLIANCE : *** CONFORME ***
+================================================================
+
+RESUMEN DE CONFIGURACION APLICADA
+  - Hostname corporativo : RTR-PLANTIND
+  - Banner de acceso     : ACCESO RESTRINGIDO - PLANTIND
+  - Loopback7           : 10.1.7.1 / 255.255.255.0
+  - Descripcion GE1      : Enlace-WAN-Iquique
+  - Servidor NTP         : 9.9.9.9
+  - NETCONF habilitado   : Si (puerto 830)
+  - RESTCONF habilitado  : Si (HTTPS)
+
+  El equipo ha sido configurado segun los estandares corporativos
+  de Planta Industrial Ltda y esta listo para operar en produccion.
+
+================================================================
+  Generado automaticamente por generar_certificado.py
+  EP3 - DRY7122 | 2026-06-25
+================================================================
+
+[INFO] Certificado guardado en: evidencias/certificado_compliance_001V-07.txt

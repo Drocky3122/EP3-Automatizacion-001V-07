@@ -1,0 +1,80 @@
+[2026-06-25 18:21:34,302] +++ CSR1kv logfile evidencias/snapshot_final_001V-07/connection_CSR1kv.txt +++
+[2026-06-25 18:21:34,302] +++ Unicon plugin iosxe +++
+
+[2026-06-25 18:21:34,618] +++ connection to spawn: ssh -l cisco -o KexAlgorithms=diffie-hellman-group14-sha1 192.168.56.101 22, id: 139937773636624 +++
+[2026-06-25 18:21:34,618] connection to CSR1kv
+Password: 
+ ACCESO RESTRINGIDO - PLANTIND 
+
+% 22 is not an open connectionConnection to 192.168.56.101 closed by remote host.
+[2026-06-25 18:25:22,887] +++ CSR1kv logfile evidencias/snapshot_final_001V-07/connection_CSR1kv.txt +++
+[2026-06-25 18:25:22,887] +++ Unicon plugin iosxe +++
+Password: 
+[2026-06-25 18:25:23,226] +++ connection to spawn: ssh -l cisco -o KexAlgorithms=diffie-hellman-group14-sha1 192.168.56.101 22, id: 140435266260224 +++
+[2026-06-25 18:25:23,227] connection to CSR1kv
+
+ ACCESO RESTRINGIDO - PLANTIND 
+
+% 22 is not an open connectionConnection to 192.168.56.101 closed by remote host.
+[2026-06-25 18:25:47,417] +++ CSR1kv logfile evidencias/snapshot_final_001V-07/connection_CSR1kv.txt +++
+[2026-06-25 18:25:47,418] +++ Unicon plugin iosxe +++
+Password: 
+[2026-06-25 18:25:47,717] +++ connection to spawn: ssh -l cisco -o KexAlgorithms=diffie-hellman-group14-sha1 192.168.56.101 22, id: 140491380862208 +++
+[2026-06-25 18:25:47,717] connection to CSR1kv
+
+ ACCESO RESTRINGIDO - PLANTIND 
+
+% 22 is not an open connectionConnection to 192.168.56.101 closed by remote host.
+[2026-06-25 18:26:50,415] +++ CSR1kv logfile evidencias/snapshot_final_001V-07/connection_CSR1kv.txt +++
+[2026-06-25 18:26:50,415] +++ Unicon plugin iosxe +++
+Password: 
+[2026-06-25 18:26:50,715] +++ connection to spawn: ssh -l cisco -o KexAlgorithms=diffie-hellman-group14-sha1 192.168.56.101 22, id: 140144170372352 +++
+[2026-06-25 18:26:50,716] connection to CSR1kv
+
+ ACCESO RESTRINGIDO - PLANTIND 
+
+% 22 is not an open connectionConnection to 192.168.56.101 closed by remote host.
+[2026-06-25 18:27:49,151] +++ CSR1kv logfile evidencias/snapshot_final_001V-07/connection_CSR1kv.txt +++
+[2026-06-25 18:27:49,151] +++ Unicon plugin iosxe +++
+Password: 
+[2026-06-25 18:27:49,441] +++ connection to spawn: ssh -l cisco -o KexAlgorithms=diffie-hellman-group14-sha1 192.168.56.101 22, id: 140711964503296 +++
+[2026-06-25 18:27:49,441] connection to CSR1kv
+
+ ACCESO RESTRINGIDO - PLANTIND 
+% 22 is not an open connectionConnection to 192.168.56.101 closed by remote host.
+[2026-06-25 18:37:09,299] +++ CSR1kv logfile evidencias/snapshot_final_001V-07/connection_CSR1kv.txt +++
+[2026-06-25 18:37:09,299] +++ Unicon plugin iosxe +++
+Password: 
+[2026-06-25 18:37:09,596] +++ connection to spawn: ssh -l cisco -o KexAlgorithms=diffie-hellman-group14-sha1 192.168.56.101 22, id: 140290833272064 +++
+[2026-06-25 18:37:09,596] connection to CSR1kv
+
+ ACCESO RESTRINGIDO - PLANTIND 
+% 22 is not an open connectionConnection to 192.168.56.101 closed by remote host.
+[2026-06-25 18:38:05,362] +++ CSR1kv logfile evidencias/snapshot_final_001V-07/connection_CSR1kv.txt +++
+[2026-06-25 18:38:05,362] +++ Unicon plugin iosxe +++
+
+[2026-06-25 18:38:06,144] +++ connection to spawn: ssh -l cisco 192.168.56.101 -p 22, id: 139636777344256 +++
+[2026-06-25 18:38:06,144] connection to CSR1kv
+Password: 
+ ACCESO RESTRINGIDO - PLANTIND 
+
+
+RTR-PLANTIND#[2026-06-25 18:41:37,866] +++ CSR1kv logfile evidencias/snapshot_final_001V-07/connection_CSR1kv.txt +++
+[2026-06-25 18:41:37,867] +++ Unicon plugin iosxe +++
+Password: 
+[2026-06-25 18:41:38,538] +++ connection to spawn: ssh -l cisco 192.168.56.101 -p 22, id: 139685316287648 +++
+[2026-06-25 18:41:38,538] connection to CSR1kv
+
+ ACCESO RESTRINGIDO - PLANTIND 
+
+
+RTR-PLANTIND#[2026-06-25 18:46:13,133] +++ CSR1kv logfile evidencias/snapshot_final_001V-07/connection_CSR1kv.txt +++
+[2026-06-25 18:46:13,133] +++ Unicon plugin iosxe +++
+Password: 
+[2026-06-25 18:46:13,990] +++ connection to spawn: ssh -l cisco 192.168.56.101 -p 22, id: 139689099799424 +++
+[2026-06-25 18:46:13,991] connection to CSR1kv
+
+ ACCESO RESTRINGIDO - PLANTIND 
+
+
+RTR-PLANTIND#

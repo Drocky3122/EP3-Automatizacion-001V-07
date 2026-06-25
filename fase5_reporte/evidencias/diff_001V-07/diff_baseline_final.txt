@@ -1,0 +1,261 @@
+1,178c1,79
+< Building configuration...
+< 
+< Current configuration : 3602 bytes
+< !
+< ! Last configuration change at 06:35:14 UTC Thu Jun 25 2026 by cisco
+< !
+< version 16.9
+< service timestamps debug datetime msec
+< service timestamps log datetime msec
+< platform qfp utilization monitor load 80
+< no platform punt-keepalive disable-kernel-core
+< platform console virtual
+< !
+< hostname RTR-PLANTIND
+< !
+< boot-start-marker
+< boot-end-marker
+< !
+< !
+< !
+< no aaa new-model
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< ip domain name etw.netacad.com
+< !
+< !
+< !
+< login on-success log
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< subscriber templating
+< ! 
+< ! 
+< ! 
+< ! 
+< !
+< multilink bundle-name authenticated
+< !
+< !
+< !
+< !
+< !
+< crypto pki trustpoint TP-self-signed-1383965589
+<  enrollment selfsigned
+<  subject-name cn=IOS-Self-Signed-Certificate-1383965589
+<  revocation-check none
+<  rsakeypair TP-self-signed-1383965589
+< !
+< !
+< crypto pki certificate chain TP-self-signed-1383965589
+<  certificate self-signed 01
+<   30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+<   31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+<   69666963 6174652D 31333833 39363535 3839301E 170D3236 30363235 30353230 
+<   32395A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+<   4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 33383339 
+<   36353538 39308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 
+<   0A028201 0100A8F0 9406218B 81F33915 377F9F35 E098D6C8 86664382 FD4FDB2C 
+<   6A087981 3E0BED3F AE526A49 27080251 8B25BAE5 D4C80342 B5B48A0E 872363FA 
+<   8F03F67A 7571E7B9 E4E6AE05 F9403DE2 60C5E9E9 50BCE436 6F8468E0 D83BD38B 
+<   02B95379 D91187F4 00782B72 F5D15CAC 2F881FD2 579A59C1 16D0775B 3925F1BA 
+<   A21E5FB3 AA1C7D69 F134988A 86F0971D 3BC56578 C3E7B2D3 E57E051B 941D8841 
+<   DED6E9B3 A50B3DEC 67AD07FA 32D1DF88 05D76DD1 E48AFECC 71D877A6 607C250C 
+<   F3A59D11 8D84D1FC 185E91E1 5C837EB4 0D023324 A64D81F5 53F2EDB3 991F2870 
+<   70B6CE2C 991B3CE4 9FB4B25F 5FA9D708 D668543D 68C08C7D 9E0755DC 7AE87BCC 
+<   055F7BC7 F5C70203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 
+<   301F0603 551D2304 18301680 149799F9 D5A0B56A 5CD01F25 9DFC2FA6 1E967234 
+<   FF301D06 03551D0E 04160414 9799F9D5 A0B56A5C D01F259D FC2FA61E 967234FF 
+<   300D0609 2A864886 F70D0101 05050003 82010100 6EC4EDEA C3C3151F 386A98E0 
+<   B5D1BA11 364519D4 2FB4FC1A B84C7082 1E8B5ADA 6D733DB3 B40FEE92 BAD6C4B2 
+<   0FD498A1 0AB085A5 A4354028 2A551CB6 BB1ABC6E 10116129 FAA16581 8ECC4B0F 
+<   0754B5D2 5EA29E5A D5FDE18D C86D59D2 CB2150C8 B37DD7B3 706CC598 6B0C549C 
+<   D53034AA D6F3B0C9 17FC7596 9BE607A8 EB086E38 C85ABAA6 F11568DF 7A857D1F 
+<   D567D404 A1E1A359 8501FA82 F58CE030 E23DF61F CFFDFF14 9F3288E8 BBCBE8C2 
+<   B228B3B7 9E8E8F4A 05B0FAA0 8ABB3077 D0055504 7D5A73F4 01F3C226 20DBEE40 
+<   BC3243F1 8229B594 A67F59EE FCBF738D 4E64558D 2F5CB179 88D24A85 A870FBA2 
+<   9856D16B 01141F42 7AF12C75 9C65A497 F80A09E3
+<   	quit
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< license udi pid CSR1000V sn 907BJ2BCUJL
+< no license smart enable
+< diagnostic bootup level minimal
+< !
+< spanning-tree extend system-id
+< !
+< netconf-yang
+< !
+< restconf
+< !
+< username cisco privilege 15 password 0 cisco123!
+< !
+< redundancy
+< !
+< !
+< !
+< !
+< !
+< !
+< ! 
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< !
+< ! 
+< ! 
+< !
+< !
+< interface Loopback7
+<  description Loopback-Gestion-Planta Industrial Ltda
+<  ip address 10.1.7.1 255.255.255.0
+< !
+< interface GigabitEthernet1
+<  description Enlace-WAN-Iquique
+<  ip address dhcp
+<  negotiation auto
+<  no mop enabled
+<  no mop sysid
+< !
+< ip forward-protocol nd
+< no ip http server
+< ip http authentication local
+< ip http secure-server
+< !
+< !
+< !
+< !
+< !
+< !
+< control-plane
+< !
+< !
+< !
+< !
+< !
+< banner motd ^C ACCESO RESTRINGIDO - PLANTIND ^C
+< !
+< line con 0
+<  logging synchronous
+<  stopbits 1
+< line vty 0 4
+<  login local
+<  transport input ssh
+< line vty 5 15
+<  login local
+<  transport input ssh
+< !
+< ntp server 9.9.9.9
+< !
+< !
+< !
+< !
+< !
+< end
+\ No newline at end of file
+---
+>  ACCESO RESTRINGIDO - PLANTIND 
+> 
+> 
+> RTR-PLANTIND#show version
+> Cisco IOS XE Software, Version 16.09.05
+> Cisco IOS Software [Fuji], Virtual XE Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.9.5, RELEASE SOFTWARE (fc1)
+> Technical Support: http://www.cisco.com/techsupport
+> Copyright (c) 1986-2020 by Cisco Systems, Inc.
+> Compiled Thu 30-Jan-20 18:48 by mcpre
+> 
+> 
+> Cisco IOS-XE software, Copyright (c) 2005-2020 by cisco Systems, Inc.
+> All rights reserved.  Certain components of Cisco IOS-XE software are
+> licensed under the GNU General Public License ("GPL") Version 2.0.  The
+> software code licensed under GPL Version 2.0 is free software that comes
+> with ABSOLUTELY NO WARRANTY.  You can redistribute and/or modify such
+> GPL code under the terms of GPL Version 2.0.  For more details, see the
+> documentation or "License Notice" file accompanying the IOS-XE software,
+> or the applicable URL provided on the flyer accompanying the IOS-XE
+> software.
+> 
+> 
+> ROM: IOS-XE ROMMON
+> 
+> RTR-PLANTIND uptime is 2 hours, 26 minutes
+> Uptime for this control processor is 2 hours, 27 minutes
+>  --More--         
+> RTR-PLANTIND#how interfaces
+>               ^
+> % Invalid input detected at '^' marker.
+> 
+> RTR-PLANTIND#show ip route
+> Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+>        D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+>        N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+>        E1 - OSPF external type 1, E2 - OSPF external type 2
+>        i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+>        ia - IS-IS inter area, * - candidate default, U - per-user static route
+>        o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+>        a - application route
+>        + - replicated route, % - next hop override, p - overrides from PfR
+> 
+> Gateway of last resort is not set
+> 
+>       10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+> C        10.1.7.0/24 is directly connected, Loopback7
+> L        10.1.7.1/32 is directly connected, Loopback7
+>       192.168.56.0/24 is variably subnetted, 2 subnets, 2 masks
+> C        192.168.56.0/24 is directly connected, GigabitEthernet1
+> L        192.168.56.101/32 is directly connected, GigabitEthernet1
+> RTR-PLANTIND#show running-config
+> Building configuration...
+> 
+> Current configuration : 3602 bytes
+> !
+> ! Last configuration change at 06:57:38 UTC Thu Jun 25 2026 by cisco
+> !
+> version 16.9
+> service timestamps debug datetime msec
+> service timestamps log datetime msec
+> platform qfp utilization monitor load 80
+> no platform punt-keepalive disable-kernel-core
+> platform console virtual
+> !
+> hostname RTR-PLANTIND
+> !
+> boot-start-marker
+> boot-end-marker
+> !
+> !
+> !
+> no aaa new-model
+> !
+> !
+> !
+>  --More--         
+> RTR-PLANTIND#xit
+> % Bad IP address or host name% Unknown command or computer name, or unable to find computer address
+> RTR-PLANTIND#
+\ No newline at end of file
