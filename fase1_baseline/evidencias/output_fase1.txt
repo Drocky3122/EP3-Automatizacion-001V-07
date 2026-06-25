@@ -1,0 +1,15 @@
+=== BASELINE SNAPSHOT ===
+Alumno : 001V-07 - Gonzalez Hernandez Rodrigo
+Fecha  : Thu 25 Jun 2026 05:58:11 AM UTC
+Host   : labvm
+=========================
+
+Learning '['interface', 'platform', 'routing']' on devices '['CSR1kv']'
+[1m[31m
+failed to connect to CSR1kv
+Failed while bringing device to "any" state[0m[39m
+
+
+=== BASELINE COMPLETADO ===
+Archivos generados en: evidencias/baseline_001V-07/
+connection_CSR1kv.txt
