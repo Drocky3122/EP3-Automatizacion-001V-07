@@ -1,0 +1,43 @@
+============================================================
+  VALIDACION RESTCONF - EP3 DRY7122
+  Script  : validacion_restconf.py
+  Fecha   : 2026-06-25 18:15:58
+  Host VM : labvm
+  Alumno  : 001V-07 - Gonzalez Hernandez Rodrigo
+============================================================
+
+[INFO] Consultando endpoints RESTCONF ...
+
+[INFO] GET https://192.168.56.101/restconf/data/Cisco-IOS-XE-native:native/hostname
+[INFO] Guardado: get_hostname.json
+[INFO] GET https://192.168.56.101/restconf/data/ietf-interfaces:interfaces/interface=Loopback7
+[INFO] Guardado: get_loopback.json
+[INFO] GET https://192.168.56.101/restconf/data/ietf-interfaces:interfaces/interface=GigabitEthernet1
+[INFO] Guardado: get_interfaces.json
+[INFO] GET https://192.168.56.101/restconf/data/Cisco-IOS-XE-native:native/ntp
+[INFO] Guardado: get_ntp.json
+
+------------------------------------------------------------
+  REPORTE DE VALIDACION RESTCONF
+------------------------------------------------------------
+  [OK]   Hostname corporativo
+         Esperado : RTR-PLANTIND
+         Obtenido : RTR-PLANTIND
+
+  [OK]   IP Loopback
+         Esperado : 10.1.7.1
+         Obtenido : 10.1.7.1
+
+  [OK]   Descripcion WAN
+         Esperado : Enlace-WAN-Iquique
+         Obtenido : Enlace-WAN-Iquique
+
+  [OK]   Servidor NTP
+         Esperado : 9.9.9.9
+         Obtenido : 9.9.9.9
+
+------------------------------------------------------------
+  Criterios CONFORME : 4/4
+
+  *** RESULTADO GLOBAL: CONFORME ***
+============================================================

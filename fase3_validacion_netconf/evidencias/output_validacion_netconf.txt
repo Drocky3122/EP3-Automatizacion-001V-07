@@ -1,0 +1,40 @@
+============================================================
+  VALIDACION NETCONF - EP3 DRY7122
+  Script  : validacion_netconf.py
+  Fecha   : 2026-06-25 18:06:30
+  Host VM : labvm
+  Alumno  : 001V-07 - Gonzalez Hernandez Rodrigo
+============================================================
+
+[INFO] Conectando a 192.168.56.101:830 via NETCONF ...
+[INFO] Sesion NETCONF establecida correctamente
+[INFO] XML crudo guardado en: evidencias/rpc_reply_raw.xml
+
+------------------------------------------------------------
+  REPORTE DE VALIDACION NETCONF
+------------------------------------------------------------
+  [OK]   Hostname corporativo
+         Esperado : RTR-PLANTIND
+         Obtenido : RTR-PLANTIND
+
+  [OK]   IP Loopback
+         Esperado : 10.1.7.1
+         Obtenido : 10.1.7.1
+
+  [OK]   Mascara Loopback
+         Esperado : 255.255.255.0
+         Obtenido : 255.255.255.0
+
+  [OK]   Descripcion WAN
+         Esperado : Enlace-WAN-Iquique
+         Obtenido : Enlace-WAN-Iquique
+
+  [OK]   Servidor NTP
+         Esperado : 9.9.9.9
+         Obtenido : 9.9.9.9
+
+------------------------------------------------------------
+  Criterios CONFORME : 5/5
+
+  *** RESULTADO GLOBAL: CONFORME ***
+============================================================

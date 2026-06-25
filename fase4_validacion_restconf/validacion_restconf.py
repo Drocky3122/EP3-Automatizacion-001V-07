@@ -14,10 +14,8 @@ import yaml
 import requests
 import urllib3
 
-# Silenciar advertencias SSL (certificado autofirmado del router)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# ── Metadatos ─────────────────────────────────────────────────────────────
 print("=" * 60)
 print("  VALIDACION RESTCONF - EP3 DRY7122")
 print(f"  Script  : {os.path.basename(__file__)}")
@@ -27,7 +25,6 @@ print(f"  Alumno  : 001V-07 - Gonzalez Hernandez Rodrigo")
 print("=" * 60)
 print()
 
-# ── Cargar variables ──────────────────────────────────────────────────────
 VARS_PATH = os.path.join(os.path.dirname(__file__), "../vars/vars_001V-07.yaml")
 with open(VARS_PATH, "r") as f:
     v = yaml.safe_load(f)
@@ -35,18 +32,17 @@ with open(VARS_PATH, "r") as f:
 router  = v["router"]
 cliente = v["cliente"]
 
-ROUTER_IP  = router["ip"]
-USUARIO    = router["usuario"]
-PASSWORD   = router["password"]
-BASE_URL   = f"https://{ROUTER_IP}/restconf/data"
-HEADERS    = {"Accept": "application/yang-data+json"}
-AUTH       = (USUARIO, PASSWORD)
-LB_ID      = router["loopback_id"]
+ROUTER_IP = router["ip"]
+USUARIO   = router["usuario"]
+PASSWORD  = router["password"]
+BASE_URL  = f"https://{ROUTER_IP}/restconf/data"
+HEADERS   = {"Accept": "application/yang-data+json"}
+AUTH      = (USUARIO, PASSWORD)
+LB_ID     = router["loopback_id"]
 
 RESPONSES_DIR = os.path.join(os.path.dirname(__file__), "evidencias/responses")
 os.makedirs(RESPONSES_DIR, exist_ok=True)
 
-# ── Función helper ─────────────────────────────────────────────────────────
 def get_endpoint(nombre, endpoint, archivo):
     url = f"{BASE_URL}/{endpoint}"
     print(f"[INFO] GET {url}")
@@ -66,71 +62,52 @@ def get_endpoint(nombre, endpoint, archivo):
 print("[INFO] Consultando endpoints RESTCONF ...")
 print()
 
-# ── Consultas ─────────────────────────────────────────────────────────────
-data_hostname   = get_endpoint(
-    "Hostname",
-    "Cisco-IOS-XE-native:native/hostname",
-    "get_hostname.json"
-)
+data_hostname   = get_endpoint("Hostname",       "Cisco-IOS-XE-native:native/hostname",                    "get_hostname.json")
+data_loopback   = get_endpoint("Loopback",       f"ietf-interfaces:interfaces/interface=Loopback{LB_ID}",  "get_loopback.json")
+data_interfaces = get_endpoint("GigabitEthernet1","ietf-interfaces:interfaces/interface=GigabitEthernet1", "get_interfaces.json")
+data_ntp        = get_endpoint("NTP",            "Cisco-IOS-XE-native:native/ntp",                        "get_ntp.json")
 
-data_loopback   = get_endpoint(
-    "Loopback",
-    f"ietf-interfaces:interfaces/interface=Loopback{LB_ID}",
-    "get_loopback.json"
-)
+# Extraer valores
+hostname_actual = None
+if data_hostname:
+    hostname_actual = str(data_hostname.get("Cisco-IOS-XE-native:hostname", "")).strip()
 
-data_interfaces = get_endpoint(
-    "GigabitEthernet1",
-    "ietf-interfaces:interfaces/interface=GigabitEthernet1",
-    "get_interfaces.json"
-)
-
-data_ntp        = get_endpoint(
-    "NTP",
-    "Cisco-IOS-XE-native:native/ntp",
-    "get_ntp.json"
-)
-
-# ── Extraer valores obtenidos ─────────────────────────────────────────────
-def safe_get(data, *keys):
-    try:
-        val = data
-        for k in keys:
-            val = val[k]
-        return str(val).strip() if val else None
-    except (KeyError, TypeError):
-        return None
-
-hostname_actual = safe_get(data_hostname, "Cisco-IOS-XE-native:hostname")
-
-# Loopback IP desde ietf-interfaces
 loopback_ip_actual = None
 if data_loopback:
-    addrs = safe_get(data_loopback, "ietf-interfaces:interface", "ietf-ip:ipv4", "address")
-    if isinstance(addrs, list) and addrs:
-        loopback_ip_actual = addrs[0].get("ip")
+    try:
+        addrs = data_loopback["ietf-interfaces:interface"]["ietf-ip:ipv4"]["address"]
+        if addrs:
+            loopback_ip_actual = addrs[0].get("ip")
+    except (KeyError, IndexError):
+        pass
 
-# Descripción WAN
-desc_wan_actual = safe_get(data_interfaces, "ietf-interfaces:interface", "description")
+desc_wan_actual = None
+if data_interfaces:
+    try:
+        desc_wan_actual = data_interfaces["ietf-interfaces:interface"].get("description", "").strip()
+    except KeyError:
+        pass
 
-# NTP server
 ntp_actual = None
 if data_ntp:
-    servers = safe_get(data_ntp, "Cisco-IOS-XE-native:ntp", "Cisco-IOS-XE-ntp:server", "server-list")
-    if isinstance(servers, list) and servers:
-        ntp_actual = servers[0].get("ip-address")
+    try:
+        servers = data_ntp["Cisco-IOS-XE-native:ntp"]["Cisco-IOS-XE-ntp:server"]["server-list"]
+        if servers:
+            ntp_actual = servers[0].get("ip-address")
+    except (KeyError, IndexError):
+        pass
 
-# ── Comparación y reporte ─────────────────────────────────────────────────
+# Reporte
 print()
 print("-" * 60)
 print("  REPORTE DE VALIDACION RESTCONF")
 print("-" * 60)
 
 criterios = [
-    ("Hostname corporativo", cliente["hostname"],     hostname_actual),
-    ("IP Loopback",          router["loopback_ip"],   loopback_ip_actual),
+    ("Hostname corporativo", cliente["hostname"],      hostname_actual),
+    ("IP Loopback",          router["loopback_ip"],    loopback_ip_actual),
     ("Descripcion WAN",      router["descripcion_wan"], desc_wan_actual),
-    ("Servidor NTP",         router["ntp_server"],    ntp_actual),
+    ("Servidor NTP",         router["ntp_server"],     ntp_actual),
 ]
 
 resultados = []

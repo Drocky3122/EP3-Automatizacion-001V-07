@@ -28,28 +28,25 @@ VARS_PATH = os.path.join(os.path.dirname(__file__), "../vars/vars_001V-07.yaml")
 with open(VARS_PATH, "r") as f:
     v = yaml.safe_load(f)
 
-router   = v["router"]
-cliente  = v["cliente"]
-alumno   = v["alumno"]
+router  = v["router"]
+cliente = v["cliente"]
 
-ROUTER_IP   = router["ip"]
-USUARIO     = router["usuario"]
-PASSWORD    = router["password"]
-HOSTNAME_EXP = cliente["hostname"]
-LOOPBACK_IP_EXP   = router["loopback_ip"]
-LOOPBACK_MASK_EXP = router["loopback_mask"]
-DESC_WAN_EXP      = router["descripcion_wan"]
-NTP_EXP           = router["ntp_server"]
-LOOPBACK_ID       = router["loopback_id"]
+ROUTER_IP        = router["ip"]
+USUARIO          = router["usuario"]
+PASSWORD         = router["password"]
+HOSTNAME_EXP     = cliente["hostname"]
+LOOPBACK_IP_EXP  = router["loopback_ip"]
+LOOPBACK_MASK_EXP= router["loopback_mask"]
+DESC_WAN_EXP     = router["descripcion_wan"]
+NTP_EXP          = router["ntp_server"]
+LOOPBACK_ID      = str(router["loopback_id"])
 
 print(f"[INFO] Conectando a {ROUTER_IP}:830 via NETCONF ...")
 
-# ── Filtro XML para modelo Cisco-IOS-XE-native ───────────────────────────
 FILTER_XML = """
 <filter>
   <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
     <hostname/>
-    <banner/>
     <ntp/>
     <interface>
       <GigabitEthernet>
@@ -65,7 +62,6 @@ FILTER_XML = """
 </filter>
 """
 
-# ── Conexión y get_config ─────────────────────────────────────────────────
 try:
     with manager.connect(
         host=ROUTER_IP,
@@ -81,7 +77,6 @@ try:
         reply = m.get_config(source="running", filter=FILTER_XML)
         xml_raw = reply.xml
 
-        # Guardar XML crudo
         evidencias_dir = os.path.join(os.path.dirname(__file__), "evidencias")
         os.makedirs(evidencias_dir, exist_ok=True)
         xml_path = os.path.join(evidencias_dir, "rpc_reply_raw.xml")
@@ -90,39 +85,49 @@ try:
         print(f"[INFO] XML crudo guardado en: {xml_path}")
         print()
 
-        # ── Parsear XML ──────────────────────────────────────────────────
         root = etree.fromstring(xml_raw.encode())
-        ns = {"ios": "http://cisco.com/ns/yang/Cisco-IOS-XE-native"}
+
+        ns_native = "http://cisco.com/ns/yang/Cisco-IOS-XE-native"
+        ns_ntp    = "http://cisco.com/ns/yang/Cisco-IOS-XE-ntp"
+
+        ns = {
+            "ios":  ns_native,
+            "ntp":  ns_ntp,
+        }
 
         def get_text(element, xpath):
             node = element.find(xpath, ns)
             return node.text.strip() if node is not None and node.text else None
 
-        # Extraer valores
+        # Hostname
         hostname_actual = get_text(root, ".//ios:native/ios:hostname")
 
+        # Loopback
         loopback_ip_actual   = None
         loopback_mask_actual = None
         for lb in root.findall(".//ios:native/ios:interface/ios:Loopback", ns):
             lb_name = get_text(lb, "ios:name")
-            if lb_name == str(LOOPBACK_ID):
+            if lb_name == LOOPBACK_ID:
                 loopback_ip_actual   = get_text(lb, ".//ios:primary/ios:address")
                 loopback_mask_actual = get_text(lb, ".//ios:primary/ios:mask")
 
+        # Descripcion WAN
         desc_wan_actual = get_text(root, ".//ios:native/ios:interface/ios:GigabitEthernet/ios:description")
-        ntp_actual      = get_text(root, ".//ios:native/ios:ntp/ios:server/ios:server-list/ios:ip-address")
 
-        # ── Comparación y reporte ────────────────────────────────────────
+        # NTP — namespace propio Cisco-IOS-XE-ntp
+        ntp_actual = get_text(root, ".//ios:native/ios:ntp/ntp:server/ntp:server-list/ntp:ip-address")
+
+        # ── Reporte ──────────────────────────────────────────────────────
         print("-" * 60)
         print("  REPORTE DE VALIDACION NETCONF")
         print("-" * 60)
 
         criterios = [
-            ("Hostname corporativo", HOSTNAME_EXP,      hostname_actual),
-            ("IP Loopback",          LOOPBACK_IP_EXP,   loopback_ip_actual),
-            ("Mascara Loopback",     LOOPBACK_MASK_EXP, loopback_mask_actual),
-            ("Descripcion WAN",      DESC_WAN_EXP,      desc_wan_actual),
-            ("Servidor NTP",         NTP_EXP,           ntp_actual),
+            ("Hostname corporativo", HOSTNAME_EXP,       hostname_actual),
+            ("IP Loopback",          LOOPBACK_IP_EXP,    loopback_ip_actual),
+            ("Mascara Loopback",     LOOPBACK_MASK_EXP,  loopback_mask_actual),
+            ("Descripcion WAN",      DESC_WAN_EXP,       desc_wan_actual),
+            ("Servidor NTP",         NTP_EXP,            ntp_actual),
         ]
 
         resultados = []
